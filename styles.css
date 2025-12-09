@@ -428,7 +428,6 @@ section h2 {
 	height: 100%;
 	object-fit: cover;
 	user-select: none;
-	pointer-events: none;
 }
 
 .after-image {
@@ -458,6 +457,8 @@ section h2 {
 	transition: all 0.3s ease;
 	color: white;
 	font-weight: bold;
+	pointer-events: auto;
+}
 }
 
 .before-after-slider:hover .before-after-handle {
@@ -1219,6 +1220,7 @@ button[type=submit]:hover {
 
 /* Bandeau Offre Spéciale */
 .promo-banner {
+	display: none; /* Désactivé temporairement */
 	position: fixed;
 	top: 0;
 	left: 0;
