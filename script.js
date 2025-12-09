@@ -154,78 +154,21 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
-// AVANT/APRÈS SLIDER - VERSION SANS VERROUILLAGE FOCUS
+// AVANT/APRÈS SLIDER - VERSION INPUT RANGE
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
   const sliders = document.querySelectorAll('.before-after-slider');
   
   sliders.forEach(function(slider) {
     const beforeImg = slider.querySelector('.before-image');
-    const handle = slider.querySelector('.before-after-handle');
+    const rangeInput = slider.querySelector('.slider-range');
     
-    if (!beforeImg || !handle) {
-      console.log('Slider incomplet détecté');
-      return;
-    }
+    if (!beforeImg || !rangeInput) return;
     
-    console.log('Slider initialisé');
-    let isDragging = false;
-    
-    function updatePosition(clientX) {
-      const rect = slider.getBoundingClientRect();
-      let x = clientX - rect.left;
-      
-      // Contraintes
-      if (x < 0) x = 0;
-      if (x > rect.width) x = rect.width;
-      
-      const percentage = (x / rect.width) * 100;
-      
-      beforeImg.style.clipPath = 'inset(0 ' + (100 - percentage) + '% 0 0)';
-      handle.style.left = percentage + '%';
-      
-      console.log('Position mise à jour:', percentage + '%');
-    }
-    
-    // Événements souris - SANS preventDefault
-    handle.addEventListener('mousedown', function(e) {
-      console.log('Mousedown détecté');
-      isDragging = true;
-      updatePosition(e.clientX);
+    rangeInput.addEventListener('input', function() {
+      const value = this.value;
+      beforeImg.style.clipPath = 'inset(0 ' + (100 - value) + '% 0 0)';
     });
-    
-    slider.addEventListener('mousemove', function(e) {
-      if (isDragging) {
-        updatePosition(e.clientX);
-      }
-    });
-    
-    document.addEventListener('mouseup', function() {
-      if (isDragging) {
-        console.log('Mouseup - fin de drag');
-        isDragging = false;
-      }
-    });
-    
-    // Événements tactiles - avec passive pour éviter le verrouillage
-    handle.addEventListener('touchstart', function(e) {
-      console.log('Touchstart détecté');
-      isDragging = true;
-      updatePosition(e.touches[0].clientX);
-    }, { passive: true });
-    
-    slider.addEventListener('touchmove', function(e) {
-      if (isDragging) {
-        updatePosition(e.touches[0].clientX);
-      }
-    }, { passive: true });
-    
-    document.addEventListener('touchend', function() {
-      if (isDragging) {
-        console.log('Touchend - fin de drag');
-        isDragging = false;
-      }
-    }, { passive: true });
   });
 });
 
