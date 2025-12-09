@@ -1,4 +1,137 @@
-// Navigation smooth scroll
+// ============================================
+// PAGE LOADER
+// ============================================
+window.addEventListener('load', () => {
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    setTimeout(() => {
+      loader.classList.add('hidden');
+    }, 800);
+  }
+});
+
+// ============================================
+// BARRE DE PROGRESSION DU SCROLL
+// ============================================
+window.addEventListener('scroll', () => {
+  const scrollProgress = document.getElementById('scrollProgress');
+  if (scrollProgress) {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+    scrollProgress.style.width = scrollPercentage + '%';
+  }
+});
+
+// ============================================
+// MODE SOMBRE / CLAIR
+// ============================================
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+}
+
+// ============================================
+// MENU BURGER MOBILE
+// ============================================
+const menuBurger = document.getElementById('menuBurger');
+const mainNav = document.getElementById('mainNav');
+
+if (menuBurger && mainNav) {
+  menuBurger.addEventListener('click', () => {
+    menuBurger.classList.toggle('active');
+    mainNav.classList.toggle('active');
+  });
+
+  // Fermer le menu en cliquant sur un lien
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBurger.classList.remove('active');
+      mainNav.classList.remove('active');
+    });
+  });
+}
+
+// ============================================
+// ANIMATIONS AU SCROLL
+// ============================================
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Appliquer l'animation aux sections
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    section.classList.add('fade-in');
+    observer.observe(section);
+  });
+});
+
+// ============================================
+// COMPTEURS ANIMÉS (STATS)
+// ============================================
+function animateCounter(element, target, suffix = '') {
+  let current = 0;
+  const increment = target / 100;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      element.textContent = target + suffix;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.ceil(current) + suffix;
+    }
+  }, 20);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.animated) {
+      const statNumber = entry.target.querySelector('.stat-number');
+      const text = statNumber.textContent;
+      
+      if (text.includes('+')) {
+        animateCounter(statNumber, 100, '+');
+      } else if (text.includes('★')) {
+        animateCounter(statNumber, 5, '★');
+      } else if (text.includes('h')) {
+        animateCounter(statNumber, 48, 'h');
+      }
+      
+      entry.target.dataset.animated = 'true';
+    }
+  });
+}, { threshold: 0.5 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.stat-item').forEach(stat => {
+    statsObserver.observe(stat);
+  });
+});
+
+// ============================================
+// NAVIGATION SMOOTH SCROLL (existant)
+// ============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
