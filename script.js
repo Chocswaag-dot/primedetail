@@ -153,12 +153,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Avant/Après Slider
+// ============================================
+// AVANT/APRÈS SLIDER
+// ============================================
 function initBeforeAfterSliders() {
   const sliders = document.querySelectorAll('.before-after-slider');
   
   sliders.forEach(slider => {
     const beforeImage = slider.querySelector('.before-image');
+    if (!beforeImage) return;
+    
     const handle = document.createElement('div');
     handle.className = 'before-after-handle';
     handle.textContent = '◀ ▶';
@@ -167,46 +171,76 @@ function initBeforeAfterSliders() {
     let isActive = false;
 
     function updateSlider(e) {
-      if (!isActive && !e.type.includes('click')) return;
-      
       const rect = slider.getBoundingClientRect();
-      let x = e.clientX ? e.clientX - rect.left : e.touches?.[0]?.clientX - rect.left;
+      let x;
+      
+      if (e.touches && e.touches[0]) {
+        x = e.touches[0].clientX - rect.left;
+      } else if (e.clientX !== undefined) {
+        x = e.clientX - rect.left;
+      } else {
+        return;
+      }
       
       if (x < 0) x = 0;
       if (x > rect.width) x = rect.width;
       
       const percentage = (x / rect.width) * 100;
       
-      // Clipper l'image "Avant" de droite vers la gauche (révéler "Après")
       beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
       handle.style.left = percentage + '%';
     }
 
-    handle.addEventListener('mousedown', () => {
+    // Mouse events
+    handle.addEventListener('mousedown', (e) => {
+      e.preventDefault();
       isActive = true;
+      updateSlider(e);
     });
 
-    handle.addEventListener('touchstart', () => {
-      isActive = true;
+    slider.addEventListener('mousemove', (e) => {
+      if (isActive) {
+        e.preventDefault();
+        updateSlider(e);
+      }
     });
-
-    document.addEventListener('mousemove', updateSlider);
-    document.addEventListener('touchmove', updateSlider, { passive: true });
 
     document.addEventListener('mouseup', () => {
       isActive = false;
     });
+
+    // Touch events
+    handle.addEventListener('touchstart', (e) => {
+      isActive = true;
+      updateSlider(e);
+    }, { passive: false });
+
+    slider.addEventListener('touchmove', (e) => {
+      if (isActive) {
+        e.preventDefault();
+        updateSlider(e);
+      }
+    }, { passive: false });
 
     document.addEventListener('touchend', () => {
       isActive = false;
     });
 
     // Click to slide
-    slider.addEventListener('click', updateSlider);
+    slider.addEventListener('click', (e) => {
+      if (!isActive) {
+        updateSlider(e);
+      }
+    });
   });
 }
 
-document.addEventListener('DOMContentLoaded', initBeforeAfterSliders);
+// Initialiser les sliders après le chargement complet
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBeforeAfterSliders);
+} else {
+  initBeforeAfterSliders();
+}
 
 // Form validation and submission
 const reservationForm = document.getElementById('reservationForm');
