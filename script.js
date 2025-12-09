@@ -158,12 +158,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ============================================
 function initBeforeAfterSliders() {
   const sliders = document.querySelectorAll('.before-after-slider');
+  console.log('Sliders trouvés:', sliders.length);
   
-  sliders.forEach(slider => {
+  sliders.forEach((slider, index) => {
     const beforeImage = slider.querySelector('.before-image');
     const handle = slider.querySelector('.before-after-handle');
     
-    if (!beforeImage || !handle) return;
+    console.log(`Slider ${index}:`, { beforeImage, handle });
+    
+    if (!beforeImage || !handle) {
+      console.warn(`Slider ${index} manque beforeImage ou handle`);
+      return;
+    }
     
     let isActive = false;
 
@@ -186,16 +192,20 @@ function initBeforeAfterSliders() {
       
       beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
       handle.style.left = percentage + '%';
+      
+      console.log(`Update slider ${index}:`, percentage);
     }
 
     // Mouse events
     handle.addEventListener('mousedown', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       isActive = true;
+      console.log('Mousedown sur handle');
       updateSlider(e);
     });
 
-    slider.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', (e) => {
       if (isActive) {
         e.preventDefault();
         updateSlider(e);
@@ -203,16 +213,22 @@ function initBeforeAfterSliders() {
     });
 
     document.addEventListener('mouseup', () => {
+      if (isActive) {
+        console.log('Mouseup - fin drag');
+      }
       isActive = false;
     });
 
     // Touch events
     handle.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       isActive = true;
+      console.log('Touchstart sur handle');
       updateSlider(e);
     }, { passive: false });
 
-    slider.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', (e) => {
       if (isActive) {
         e.preventDefault();
         updateSlider(e);
@@ -220,22 +236,30 @@ function initBeforeAfterSliders() {
     }, { passive: false });
 
     document.addEventListener('touchend', () => {
+      if (isActive) {
+        console.log('Touchend - fin drag');
+      }
       isActive = false;
     });
 
     // Click to slide
     slider.addEventListener('click', (e) => {
-      if (!isActive) {
-        updateSlider(e);
-      }
+      console.log('Click sur slider');
+      updateSlider(e);
     });
+    
+    console.log(`Slider ${index} initialisé avec succès`);
   });
 }
 
 // Initialiser les sliders après le chargement complet
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initBeforeAfterSliders);
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM chargé, init sliders');
+    initBeforeAfterSliders();
+  });
 } else {
+  console.log('DOM déjà chargé, init sliders immédiate');
   initBeforeAfterSliders();
 }
 
