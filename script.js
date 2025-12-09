@@ -17,7 +17,7 @@ function initBeforeAfterSliders() {
   const sliders = document.querySelectorAll('.before-after-slider');
   
   sliders.forEach(slider => {
-    const afterImage = slider.querySelector('.after-image');
+    const beforeImage = slider.querySelector('.before-image');
     const handle = document.createElement('div');
     handle.className = 'before-after-handle';
     handle.textContent = '◀ ▶';
@@ -36,7 +36,8 @@ function initBeforeAfterSliders() {
       
       const percentage = (x / rect.width) * 100;
       
-      afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+      // Clipper l'image "Avant" de droite vers la gauche (révéler "Après")
+      beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
       handle.style.left = percentage + '%';
     }
 
