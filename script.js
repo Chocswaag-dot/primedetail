@@ -161,12 +161,9 @@ function initBeforeAfterSliders() {
   
   sliders.forEach(slider => {
     const beforeImage = slider.querySelector('.before-image');
-    if (!beforeImage) return;
+    const handle = slider.querySelector('.before-after-handle');
     
-    const handle = document.createElement('div');
-    handle.className = 'before-after-handle';
-    handle.textContent = '◀ ▶';
-    slider.appendChild(handle);
+    if (!beforeImage || !handle) return;
     
     let isActive = false;
 
