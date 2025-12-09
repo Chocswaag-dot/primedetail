@@ -305,3 +305,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Log pour debug (à retirer en production)
 console.log('Prime Detail - Site chargé avec succès');
+
+// Bouton Retour en Haut
+document.addEventListener('DOMContentLoaded', function() {
+  const backToTopBtn = document.getElementById('backToTop');
+  
+  if (backToTopBtn) {
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+    
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+});
+
+// Gestion du Bandeau Promo
+document.addEventListener('DOMContentLoaded', function() {
+  const promoBanner = document.getElementById('promoBanner');
+  const closeBtn = document.getElementById('closeBanner');
+  
+  // Vérifier si la bannière a déjà été fermée
+  const isBannerClosed = localStorage.getItem('promoBannerClosed');
+  
+  if (!isBannerClosed && promoBanner) {
+    // Ajouter padding au body pour compenser la bannière
+    setTimeout(() => {
+      document.body.classList.add('has-promo');
+    }, 1000);
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        promoBanner.classList.add('hidden');
+        document.body.classList.remove('has-promo');
+        
+        // Sauvegarder dans le localStorage
+        localStorage.setItem('promoBannerClosed', 'true');
+        
+        // Supprimer après animation
+        setTimeout(() => {
+          promoBanner.remove();
+        }, 300);
+      });
+    }
+  } else if (promoBanner) {
+    promoBanner.remove();
+  }
+});
+
+// FAQ Accordéon
+document.addEventListener('DOMContentLoaded', function() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+      // Fermer tous les autres items
+      faqItems.forEach(otherItem => {
+        if (otherItem !== item && otherItem.classList.contains('active')) {
+          otherItem.classList.remove('active');
+        }
+      });
+      
+      // Toggle l'item actuel
+      item.classList.toggle('active');
+    });
+  });
+});
