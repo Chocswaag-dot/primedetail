@@ -479,10 +479,7 @@ section h2 {
 	background: #f8f9fa;
 	border-radius: 8px;
 }
-	font-size: 0.95rem;
-	font-style: italic;
-}
-/* Reservation */
+/* Réservation */
 .reservation {
 	background-color: white;
 }
@@ -1007,7 +1004,7 @@ body.has-promo {
 }
 
 .testimonial-text::before {
-	content: """;
+	content: "\201C";
 	font-size: 4rem;
 	color: var(--primary-color);
 	opacity: 0.1;
