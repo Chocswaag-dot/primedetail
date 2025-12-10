@@ -354,43 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Counter animation pour les stats
-function animateCounter(element, target, duration = 2000) {
-  const start = 0;
-  const increment = target / (duration / 16);
-  let current = start;
-  
-  const counter = setInterval(() => {
-    current += increment;
-    if (current >= target) {
-      element.textContent = target + '+';
-      clearInterval(counter);
-    } else {
-      element.textContent = Math.floor(current) + '+';
-    }
-  }, 16);
-}
-
-// Animer les stats quand elles entrent en vue
-const statsObserver = new IntersectionObserver(function(entries) {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-      const numberElement = entry.target.querySelector('.stat-number');
-      if (numberElement && numberElement.textContent.includes('+')) {
-        const number = parseInt(numberElement.textContent);
-        animateCounter(numberElement, number);
-      }
-      entry.target.classList.add('animated');
-    }
-  });
-}, { threshold: 0.5 });
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.stat-item').forEach(item => {
-    statsObserver.observe(item);
-  });
-});
-
 // Log pour debug (à retirer en production)
 console.log('Prime Detail - Site chargé avec succès');
 
