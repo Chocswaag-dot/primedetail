@@ -37,8 +37,12 @@ window.addEventListener('scroll', () => {
 const themeToggle = document.getElementById('themeToggle');
 const savedTheme = localStorage.getItem('theme');
 
+// Mode clair par défaut
 if (savedTheme === 'dark') {
   document.body.classList.add('dark-mode');
+} else {
+  document.body.classList.remove('dark-mode');
+  localStorage.setItem('theme', 'light');
 }
 
 if (themeToggle) {
