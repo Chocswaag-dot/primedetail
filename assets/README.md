@@ -46,3 +46,32 @@ Exemple :
 ```html
 <img src="assets/images/avant-apres/sieges-avant.jpg" alt="Sièges avant nettoyés">
 ```
+
+## Logo – génération automatique
+
+Un script est disponible pour générer des variantes optimisées du logo.
+
+Prérequis (une fois) :
+- ImageMagick (magick/convert)
+- pngquant (optionnel)
+- webp (cwebp) (optionnel)
+- potrace (optionnel pour SVG)
+
+Installation rapide (Ubuntu):
+```bash
+sudo apt update
+sudo apt install -y imagemagick pngquant webp potrace
+```
+
+Lancer la génération (à partir de votre logo source):
+```bash
+bash tools/generate-logo-assets.sh assets/images/logo/logo.png
+```
+
+Sorties attendues dans `assets/images/logo/`:
+- `prime-detail-logo.png` (600x200) et `prime-detail-logo@2x.png` (1200x400)
+- versions `.webp` si disponibles
+- favicons 64/32
+- optionnel: `prime-detail-logo.svg`
+
+Le header utilise automatiquement `picture` avec `srcset` pour Retina et WebP si présents.
