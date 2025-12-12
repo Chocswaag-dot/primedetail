@@ -32,7 +32,7 @@ body.dark-mode {
 }
 
 body {
-	font-family: 'Roboto', 'Open Sans', 'Montserrat', sans-serif;
+	font-family: 'Inter', 'Open Sans', 'Lato', sans-serif;
 	line-height: 1.6;
 	color: var(--text-dark);
 	background-color: var(--bg-body);
@@ -194,21 +194,16 @@ body.dark-mode .theme-toggle i::before {
 	flex-wrap: wrap;
 }
 
-.logo {
+/* Brand (text-only when logo removed) */
+.brand {
 	display: flex;
-	align-items: center;
-	gap: 1rem;
+	flex-direction: column;
+	gap: 0.2rem;
 }
 
-.logo-img {
-	height: 60px;
-	width: auto;
-	object-fit: contain;
-}
-
-.logo-text h1 {
-	font-size: 2rem;
-	margin-bottom: 0.2rem;
+.site-title {
+	font-size: 1.6rem;
+	font-weight: 800;
 }
 
 .tagline {
@@ -234,7 +229,7 @@ body.dark-mode .theme-toggle i::before {
 }
 /* Hero Section */
 .hero {
-	background: linear-gradient(135deg, rgba(33, 133, 160, 0.95), rgba(26, 111, 127, 0.95)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%232185a0" width="1200" height="600"/><circle cx="10%" cy="20%" r="200" fill="%23ff6b35" opacity="0.1"/><circle cx="85%" cy="80%" r="150" fill="%23ffffff" opacity="0.05"/></svg>');
+	background: linear-gradient(135deg, rgba(33, 90, 110, 0.96), rgba(15, 45, 60, 0.96));
 	background-size: cover;
 	background-position: center;
 	color: var(--text-light);
@@ -262,21 +257,29 @@ body.dark-mode .theme-toggle i::before {
 }
 
 .hero h2 {
-	font-size: 4rem;
+	font-family: 'Montserrat', 'Raleway', sans-serif;
+	font-size: 3.6rem;
 	margin-bottom: 1.5rem;
 	font-weight: 900;
 	letter-spacing: -1px;
 	text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
 	line-height: 1.1;
-	text-transform: uppercase;
+	text-transform: none;
 }
 
 .hero p {
-	font-size: 1.6rem;
+	font-size: 1.2rem;
 	margin-bottom: 2.5rem;
-	opacity: 1;
+	opacity: 0.95;
 	font-weight: 500;
-	text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4), 0 1px 5px rgba(0, 0, 0, 0.3);
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hero-proof {
+	margin-top: -1rem;
+	margin-bottom: 2rem;
+	font-size: 1rem;
+	opacity: 0.9;
 }
 
 .cta-buttons {
@@ -353,7 +356,8 @@ section {
 
 section h2 {
 	text-align: center;
-	font-size: 2.5rem;
+	font-family: 'Montserrat', 'Raleway', sans-serif;
+	font-size: 2.2rem;
 	margin-bottom: 3rem;
 	color: var(--primary-color);
 	font-weight: 700;
@@ -363,7 +367,7 @@ section h2 {
 .section-subtitle {
 	text-align: center;
 	color: #666;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	margin-bottom: 3rem;
 	font-weight: 300;
 }
