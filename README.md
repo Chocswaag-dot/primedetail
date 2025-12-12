@@ -22,3 +22,12 @@ git push origin main
 ```
 
 Le site référence le logo avec un chemin absolu GitHub Pages et un fallback local; un cache-busting `?v=3` est utilisé pour éviter les caches agressifs.
+
+### Tester rapidement le logo en ligne
+Utilisez le script simple ci-dessous pour vérifier la disponibilité du logo via GitHub Pages:
+
+```bash
+./tools/test-logo.sh 3
+```
+
+Le script tente une requête HEAD (`curl -I`) et ouvre l’URL si `$BROWSER` est défini.
