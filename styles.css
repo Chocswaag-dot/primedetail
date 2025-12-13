@@ -1259,6 +1259,15 @@ button[type=submit]:hover {
 	.reserve-sticky { display: inline-flex; }
 }
 
+/* Animation discrète d'attention */
+@keyframes gentlePulse {
+	0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 8px 25px rgba(255, 107, 53, 0.35); }
+	50% { transform: translateY(-2px) scale(1.03); box-shadow: 0 12px 32px rgba(255, 107, 53, 0.45); }
+}
+.reserve-sticky.attention {
+	animation: gentlePulse 1.6s ease-in-out 3; /* 3 cycles puis stop */
+}
+
 .whatsapp-float:hover {
 	transform: scale(1.15);
 	box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);

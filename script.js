@@ -8,6 +8,15 @@ window.addEventListener('load', () => {
       loader.classList.add('hidden');
     }, 300);
   }
+
+  // Animation discrète sur le bouton Réserver sticky (mobile)
+  const reserveSticky = document.querySelector('.reserve-sticky');
+  if (reserveSticky) {
+    setTimeout(() => {
+      reserveSticky.classList.add('attention');
+      setTimeout(() => reserveSticky.classList.remove('attention'), 5200);
+    }, 3000);
+  }
 });
 
 // Sécurité : retirer le loader après 3 secondes max
