@@ -606,7 +606,7 @@ section h2 {
 	font-weight: 700;
 	/* Uniformiser la hauteur du titre pour aligner les prix */
 	line-height: 1.2;
-	min-height: 3.6rem; /* ~2 lignes max à 1.6rem */
+	min-height: 4.4rem; /* couvre jusqu'à ~3 lignes courtes */
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
@@ -625,6 +625,8 @@ section h2 {
 	font-size: 0.95rem;
 	margin-bottom: 1.5rem;
 	font-style: italic;
+	/* Uniformiser la hauteur de la ligne durée */
+	min-height: 1.2rem;
 }
 
 /* Harmoniser l'alignement vertical des cartes tarifs */
