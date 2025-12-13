@@ -1236,6 +1236,29 @@ button[type=submit]:hover {
 	animation: pulse-whatsapp 2s infinite;
 }
 
+/* Bouton sticky Réserver (mobile) */
+.reserve-sticky {
+	position: fixed;
+	bottom: 90px; /* au-dessus du bouton WhatsApp */
+	right: 24px;
+	background: var(--highlight-color);
+	color: #fff;
+	padding: 0.9rem 1.2rem;
+	border-radius: 999px;
+	box-shadow: 0 8px 25px rgba(255, 107, 53, 0.35);
+	font-weight: 800;
+	display: none;
+	align-items: center;
+	gap: 0.6rem;
+	z-index: 999;
+}
+.reserve-sticky i { font-size: 1.1rem; }
+.reserve-sticky:hover { filter: brightness(0.95); }
+
+@media (max-width: 768px) {
+	.reserve-sticky { display: inline-flex; }
+}
+
 .whatsapp-float:hover {
 	transform: scale(1.15);
 	box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
